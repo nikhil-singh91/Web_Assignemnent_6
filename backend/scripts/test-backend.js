@@ -89,9 +89,15 @@ const runTests = async () => {
   }
 
   try {
-    // Test 1: Healthcheck
+    // Test 1: Root informational endpoint
+    const rootRes = await request(server, { path: '/' });
+    assert(rootRes.status === 200 && rootRes.data.success === true, 'GET / returns 200 and API info');
+
+    // Test 2: Healthcheck endpoints (/api/health and /health)
     const health = await request(server, { path: '/api/health' });
     assert(health.status === 200 && health.data.status === 'ok', 'GET /api/health returns 200 and ok');
+    const healthAlias = await request(server, { path: '/health' });
+    assert(healthAlias.status === 200 && healthAlias.data.status === 'ok', 'GET /health returns 200 and ok');
 
     // Test 2: Admin Login
     const adminLogin = await request(

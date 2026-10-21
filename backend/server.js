@@ -44,15 +44,33 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health Check Endpoint
-app.get('/api/health', (req, res) => {
+// Root Informational Endpoint
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Employee Leave Management System (PS4) API is running',
+    environment: process.env.NODE_ENV || 'development',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      leaveTypes: '/api/leave-types',
+      leaveRequests: '/api/leave-requests',
+      dashboard: '/api/dashboard'
+    }
+  });
+});
+
+// Health Check Endpoints (available at both /api/health and /health)
+const healthCheck = (req, res) => {
   res.status(200).json({
     status: 'ok',
     system: 'Employee Leave Management System (PS4)',
     environment: process.env.NODE_ENV || 'development',
     timestamp: new Date().toISOString()
   });
-});
+};
+app.get('/api/health', healthCheck);
+app.get('/health', healthCheck);
 
 // Mount API Routes
 app.use('/api/auth', authRoutes);
