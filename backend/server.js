@@ -1,16 +1,13 @@
-const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-// Load environment variables
 dotenv.config();
 
 const connectDB = require('./config/db');
 const { initDefaultLeaveTypes } = require('./controllers/leaveTypeController');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
-// Route imports
 const authRoutes = require('./routes/authRoutes');
 const leaveTypeRoutes = require('./routes/leaveTypeRoutes');
 const leaveRequestRoutes = require('./routes/leaveRequestRoutes');

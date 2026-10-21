@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const LeaveRequest = require('../models/LeaveRequest');
 const LeaveType = require('../models/LeaveType');
 const User = require('../models/User');
